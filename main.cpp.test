@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <Arduino.h>
+
+void setup(void)
+{
+	Serial.begin(9600);
+	pinMode(13,OUTPUT);
+}
+
+void loop(void)
+{
+	Serial.println("Test");
+	digitalWrite(13,HIGH);
+	delay(1000);
+	digitalWrite(13,LOW);
+	delay(1000);
+}
