@@ -72,6 +72,11 @@ void CFW10::setDirection(CFW10_DIRECTION dir)
     digitalWrite(CFW10::di2Pin, dir);
 }
 
+void CFW10::setDuty( uint8_t duty )
+{
+	analogWrite( CFW10::ai1Pin, duty );
+}
+
 void setPwmFrequency(int pin, int divisor) {
 
   byte mode;

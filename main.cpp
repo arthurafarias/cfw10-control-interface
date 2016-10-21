@@ -37,9 +37,12 @@
 // int cfw10Pin_di4 = 12; // HIGH - Stop; LOW - Start
 // int cfw10Pin_ai1 = 3; // 255 - Full Speed; 0 - Low Speed
 
-# include <Arduino.h>
-#include "lib/main.h"
+#include <stdint.h>
+
+#include <Arduino.h>
 #include <LiquidCrystal.h>
+
+#include "lib/main.h"
 #include "lib/TimerOne.h"
 #include "lib/CFW10.h"
 #include "lib/Keypad.h"
@@ -51,20 +54,23 @@ Keypad keypad( 28,29,30,31,32,33,34,35 );
 unsigned long int ms;
 unsigned long int s;
 
-void setPwmFrequency(int,int);
-
 void count1ms(void);
 void count1s(void);
+void keypad_callback( uint8_t col, uint8_t row );
 
 void setup(void) {
 
 	Serial.begin(9600);
+	Serial.println("CFW10 CNTRL TEST");
+
+	lcd.print("CFW10 CNTRL TEST");
+
+	keypad.attachCallback(keypad_callback);
 
 	return ;
 }
 
 void loop(void) {
-
 	keypad.itkernel();
 	return ;
 }

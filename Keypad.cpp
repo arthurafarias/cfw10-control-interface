@@ -20,6 +20,15 @@ Keypad::Keypad( uint8_t col1, uint8_t col2, uint8_t col3, uint8_t col4, uint8_t 
     Keypad::col_pressed = 0;
     Keypad::row_pressed = 0;
 
+    pinMode(Keypad::col[0], OUTPUT);
+    pinMode(Keypad::col[1], OUTPUT);
+    pinMode(Keypad::col[2], OUTPUT);
+    pinMode(Keypad::col[3], OUTPUT);
+    pinMode(Keypad::row[0], INPUT);
+    pinMode(Keypad::row[1], INPUT);
+    pinMode(Keypad::row[2], INPUT);
+    pinMode(Keypad::row[3], INPUT);
+
 }
 
 void Keypad::itkernel(void)
@@ -37,8 +46,14 @@ void Keypad::itkernel(void)
 
     if (val == HIGH)
     {
+
+//	Serial.print("Col: ");
+//	Serial.println(col_curr);
+//	Serial.print("Row: ");
+//	Serial.println(row_curr);
+
         if (Keypad::callback != NULL)
-            Keypad::callback(col_curr, row_curr );
+            Keypad::callback( col_curr, row_curr );
     }
 
     if (Keypad::row_curr < 3)
@@ -58,7 +73,7 @@ void Keypad::itkernel(void)
 
 }
 
-unsigned char decode( unsigned int col, unsigned int row)
+char Keypad::decode( uint8_t col, uint8_t row)
 {
 
 	switch(	0x10 << col | 0x01 << row )
@@ -99,4 +114,10 @@ unsigned char decode( unsigned int col, unsigned int row)
 	}
 
 	return 0;
+}
+
+void Keypad::attachCallback ( void ( * callback ) (uint8_t col, uint8_t row) )
+{
+	if (callback != NULL)
+		Keypad::callback = callback;
 }
